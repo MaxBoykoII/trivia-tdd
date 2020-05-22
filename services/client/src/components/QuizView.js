@@ -35,15 +35,15 @@ class QuizView extends Component {
     })
   }
 
-  selectCategory = ({type, id=0}) => {
-    this.setState({quizCategory: {type, id}}, this.getNextQuestion)
+  handleSelectCategory = ({type, id=0}) => {
+    this.setState({quizCategory: {type, id}}, this.handleGetNextQuestion)
   }
 
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  getNextQuestion = () => {
+  handleGetNextQuestion = () => {
     const previousQuestions = [...this.state.previousQuestions]
     if(this.state.currentQuestion.id) { previousQuestions.push(this.state.currentQuestion.id) }
 
@@ -77,7 +77,7 @@ class QuizView extends Component {
     })
   }
 
-  submitGuess = (event) => {
+  handleSubmitGuess = (event) => {
     event.preventDefault();
     const formatGuess = this.state.guess.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").toLowerCase()
     let evaluate =  this.evaluateAnswer()
@@ -87,7 +87,7 @@ class QuizView extends Component {
     })
   }
 
-  restartGame = () => {
+  handleRestartGame = () => {
     this.setState({
       quizCategory: null,
       previousQuestions: [], 
@@ -104,14 +104,15 @@ class QuizView extends Component {
           <div className="quiz-play-holder">
               <div className="choose-header">Choose Category</div>
               <div className="category-holder">
-                  <div className="play-category" onClick={this.selectCategory}>ALL</div>
+                  <div className="play-category" onClick={this.handleSelectCategory}>ALL</div>
                   {Object.keys(this.state.categories).map(id => {
                   return (
                     <div
                       key={id}
                       value={id}
                       className="play-category"
-                      onClick={() => this.selectCategory({type:this.state.categories[id], id})}>
+                      onClick={() => this.selectCategory({type:this.state.categories[id], id})}
+                    >
                       {this.state.categories[id]}
                     </div>
                   )
@@ -125,7 +126,7 @@ class QuizView extends Component {
     return(
       <div className="quiz-play-holder">
         <div className="final-header"> Your Final Score is {this.state.numCorrect}</div>
-        <div className="play-again button" onClick={this.restartGame}> Play Again? </div>
+        <div className="play-again button" onClick={this.handleRestartGame}> Play Again? </div>
       </div>
     )
   }
@@ -144,7 +145,7 @@ class QuizView extends Component {
         <div className="quiz-question">{this.state.currentQuestion.question}</div>
         <div className={`${evaluate ? 'correct' : 'wrong'}`}>{evaluate ? "You were correct!" : "You were incorrect"}</div>
         <div className="quiz-answer">{this.state.currentQuestion.answer}</div>
-        <div className="next-question button" onClick={this.getNextQuestion}> Next Question </div>
+        <div className="next-question button" onClick={this.handleGetNextQuestion}> Next Question </div>
       </div>
     )
   }
@@ -157,8 +158,8 @@ class QuizView extends Component {
         : (
           <div className="quiz-play-holder">
             <div className="quiz-question">{this.state.currentQuestion.question}</div>
-            <form onSubmit={this.submitGuess}>
-              <input type="text" name="guess" onChange={this.handleChange}/>
+            <form onSubmit={this.handleSubmitGuess}>
+              <input type="text" name="guess" onChange={this.handleChange} />
               <input className="submit-guess button" type="submit" value="Submit Answer" />
             </form>
           </div>

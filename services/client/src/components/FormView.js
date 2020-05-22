@@ -31,7 +31,7 @@ class FormView extends Component {
   }
 
 
-  submitQuestion = (event) => {
+  handleSubmitQuestion = (event) => {
     event.preventDefault();
     $.ajax({
       url: '/questions', //TODO: update request URL
@@ -67,14 +67,14 @@ class FormView extends Component {
     return (
       <div id="add-form">
         <h2>Add a New Trivia Question</h2>
-        <form className="form-view" id="add-question-form" onSubmit={this.submitQuestion}>
+        <form className="form-view" id="add-question-form" onSubmit={this.handleSubmitQuestion}>
           <label>
             Question
-            <input type="text" name="question" onChange={this.handleChange}/>
+            <input type="text" name="question" onChange={this.handleChange} />
           </label>
           <label>
             Answer
-            <input type="text" name="answer" onChange={this.handleChange}/>
+            <input type="text" name="answer" onChange={this.handleChange} />
           </label>
           <label>
             Difficulty
