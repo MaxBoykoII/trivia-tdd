@@ -1,6 +1,27 @@
 version: 2
 
 jobs:
+  build:api:
+    docker:
+      - image: cimg/base:2020.01
+    
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and push api image
+          command: |
+            docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN
+            docker pull $IMAGE:api || true
+            docker build \
+            --cache-from $IMAGE:api \
+            --tag $IMAGE:api  \
+            --file ./services/trivia/Dockerfile.prod \
+            "./services/trivia"
+            docker push $IMAGE:trivia
+
   build:client:
     docker:
       - image: cimg/base:2020.01
@@ -43,3 +64,4 @@ workflows:
       - test:client:
           requires:
             - build:client
+      - build:api
