@@ -1,5 +1,5 @@
-from project import create_app, db
-from project.api.models import Question
+from project import create_app
+from project.api.models import Question, Category
 from unittest import TestCase
 from parameterized import parameterized
 import json
@@ -8,7 +8,6 @@ import json
 class TestQuestions(TestCase):
     def setUp(self):
         self.test_app = create_app()
-        self.db = db
 
     @parameterized.expand([[1], [2], [3], [4]])
     def test_get_questions(self, page):
@@ -22,8 +21,16 @@ class TestQuestions(TestCase):
 
             per_page = Question.max_results_per_page
 
-            query = self.db.session.query(Question).paginate(page, per_page, False)
-            questions = [item.format() for item in query.items]
+            question_query = Question.query.paginate(page, per_page, False)
+            questions = [item.format() for item in question_query.items]
 
-            for i in range(len(questions)):
-                self.assertDictEqual(data[i], questions[i])
+            category_ids = [question["category"] for question in questions]
+            category_query = Category.query.filter(Category.id.in_(category_ids))
+            categories = {
+                str(item.id): item.type.lower() for item in category_query.all()
+            }
+
+            self.assertEqual(data["questions"], questions)
+            self.assertEqual(data["total_questions"], len(questions))
+            self.assertIsNone(data["current_category"], None)
+            self.assertEqual(data["categories"], categories)

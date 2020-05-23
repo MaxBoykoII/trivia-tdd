@@ -1,9 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import os
 
 # instantiate the db
 db = SQLAlchemy()
+
+cors = CORS()
 
 # application factory pattern
 def create_app(script_info=None):
@@ -16,6 +19,7 @@ def create_app(script_info=None):
 
     # set up extensions
     db.init_app(app)
+    cors.init_app(app, resources={r"*": {"origins": "*"}})
 
     # register blueprints
     from project.api.ping import ping_blueprint

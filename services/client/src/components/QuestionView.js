@@ -23,7 +23,7 @@ class QuestionView extends Component {
 
   getQuestions = () => {
     $.ajax({
-      url: `/questions?page=${this.state.page}`, //TODO: update request URL
+      url: `${process.env.REACT_APP_TRIVIA_SERVICE_URL}/questions?page=${this.state.page}`, //TODO: update request URL
       type: "GET",
       success: result => {
         this.setState({
