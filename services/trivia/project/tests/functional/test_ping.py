@@ -13,6 +13,6 @@ class TestPing(TestCase):
         resp = client.get("/ping")
         data = json.loads(resp.data.decode())
 
-        assert resp.status_code == 200
-        assert "pong" in data["message"]
-        assert "success" in data["status"]
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("pong", data["message"])
+        self.assertIn("success", data["status"])

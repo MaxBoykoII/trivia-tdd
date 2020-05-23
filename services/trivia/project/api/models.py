@@ -14,6 +14,7 @@ class Question(db.Model):
     answer = db.Column(db.String)
     category = db.Column(db.String)
     difficulty = db.Column(db.Integer)
+    max_results_per_page = 10
 
     def __init__(self, question, answer, category, difficulty):
         self.question = question
