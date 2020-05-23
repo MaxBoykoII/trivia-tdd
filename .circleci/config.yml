@@ -20,7 +20,27 @@ jobs:
             --tag $IMAGE:api  \
             --file ./services/trivia/Dockerfile.prod \
             "./services/trivia"
-            docker push $IMAGE:trivia
+            docker push $IMAGE:api
+  
+  test:api:
+    docker:
+      - image: $IMAGE:api
+        environment:
+          DATABASE_TEST_URL: postgresql://postgres:postgres@localhost:5432/trivia_test
+      - image: circleci/postgres:9.6.5-alpine-ram
+        environment:
+          POSTGRES_DB: trivia_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    steps:
+      - run:
+          name: Seed Test database
+          command: |
+            psql -d trivia_test -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
+      - run:
+          name: Test api
+          command: |
+            python -m unittest discover project/tests
 
   build:client:
     docker:
@@ -65,3 +85,6 @@ workflows:
           requires:
             - build:client
       - build:api
+      - test:api:
+          requires:
+            - build:api
