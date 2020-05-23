@@ -1,82 +1,30 @@
-from flask import Flask, jsonify
-from flask_restx import Resource, Api
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-# instantiate app
-app = Flask(__name__)
-
-api = Api(app)
-
-# set config
-app_settings = os.getenv("APP_SETTINGS")
-app.config.from_object("project.config.DevelopmentConfig")
-
 # instantiate the db
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
-"""
-Question
-"""
+# application factory pattern
+def create_app(script_info=None):
 
+    app = Flask(__name__)
 
-class Question(db.Model):
-    __tablename__ = "questions"
+    # set config
+    app_settings = os.getenv("APP_SETTINGS")
+    app.config.from_object(app_settings)
 
-    id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String)
-    answer = db.Column(db.String)
-    category = db.Column(db.String)
-    difficulty = db.Column(db.Integer)
+    # set up extensions
+    db.init_app(app)
 
-    def __init__(self, question, answer, category, difficulty):
-        self.question = question
-        self.answer = answer
-        self.category = category
-        self.difficulty = difficulty
+    # register blueprints
+    from project.api.ping import ping_blueprint
 
-    def insert(self):
-        db.session.add(self)
-        db.session.commit()
+    app.register_blueprint(ping_blueprint)
 
-    def update(self):
-        db.session.commit()
+    # shell context for flask cli
+    @app.shell_context_processor
+    def ctx():
+        return {"app": app, "db": db}
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    def format(self):
-        return {
-            "id": self.id,
-            "question": self.question,
-            "answer": self.answer,
-            "category": self.category,
-            "difficulty": self.difficulty,
-        }
-
-
-"""
-Category
-"""
-
-
-class Category(db.Model):
-    __tablename__ = "categories"
-
-    id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String)
-
-    def __init__(self, type):
-        self.type = type
-
-    def format(self):
-        return {"id": self.id, "type": self.type}
-
-
-class Ping(Resource):
-    def get(self):
-        return {"status": "success", "message": "pong!"}
-
-
-api.add_resource(Ping, "/ping")
+    return app

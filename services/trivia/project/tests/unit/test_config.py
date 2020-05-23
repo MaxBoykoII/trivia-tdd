@@ -1,12 +1,12 @@
 from unittest import TestCase
 import os
-from project import app
+from project import create_app
 
 
 class TestConfig(TestCase):
     def setUp(self):
         """Define test variables and initialize app"""
-        self.test_app = app
+        self.test_app = create_app()
 
     def test_development_config(self):
         test_app = self.test_app

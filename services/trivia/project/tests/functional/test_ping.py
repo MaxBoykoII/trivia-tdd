@@ -1,11 +1,11 @@
-from project import app
+from project import create_app
 from unittest import TestCase
 import json
 
 
 class TestPing(TestCase):
     def setUp(self):
-        self.test_app = app
+        self.test_app = create_app()
 
     def test_ping(self):
         client = self.test_app.test_client()
