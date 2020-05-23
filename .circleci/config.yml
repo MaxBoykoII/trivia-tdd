@@ -15,7 +15,11 @@ jobs:
           command: |
             docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN
             docker pull $IMAGE:client || true
-            docker build --cache-from $IMAGE:client --tag $IMAGE:client --file ./services/client/Dockerfile.ci "./services/client"
+            docker build \
+            --cache-from $IMAGE:client \
+            --tag $IMAGE:client  \
+            --file ./services/client/Dockerfile.ci \
+            "./services/client"
             docker push $IMAGE:client
 
   test:client:
