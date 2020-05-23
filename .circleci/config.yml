@@ -33,10 +33,13 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
     steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-9.6
       - run:
           name: Seed Test database
           command: |
-            psql -d trivia_test -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
+            psql -d $DATABASE_TEST_URL -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
       - run:
           name: Test api
           command: |
