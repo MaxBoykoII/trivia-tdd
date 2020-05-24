@@ -28,8 +28,7 @@ jobs:
         environment:
           DATABASE_TEST_URL: postgresql://postgres@localhost/circle_test
       - image: circleci/postgres:9.6.5-alpine-ram
-        environment:
-          POSTGRES_DB: circle_test
+      
     steps:
       - checkout
       - run:
@@ -38,8 +37,12 @@ jobs:
             apk update
             apk add postgresql-client
       - run:
+          name: Wait for Postgres to start
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
           name: Seed Test database
           command: |
+            psql \l
             psql -d $DATABASE_TEST_URL -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
       - run:
           name: Test api
