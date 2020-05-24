@@ -50,7 +50,6 @@ jobs:
       - run:
           name: Seed test db
           command: |
-            psql \l
             psql -d $DATABASE_TEST_URL -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
       - run:
           name: Test api
