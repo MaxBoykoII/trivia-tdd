@@ -52,6 +52,15 @@ jobs:
             echo "PostgresSQL started"
 
       - run:
+          name: Wait for test db
+          command: |
+            echo "Waiting for trivia_test"
+            while ! psql -lqt | cut -d \| -f 1 | grep -qw trivia_test; do
+                    sleep 0.1
+            done
+            echo "The test database is ready"
+
+      - run:
           name: Seed test db
           command: |
             echo "Going to attempt to seed the database..."
