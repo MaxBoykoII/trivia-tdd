@@ -55,7 +55,7 @@ jobs:
           name: Wait for test db
           command: |
             echo "Waiting for trivia_test"
-            while ! psql -lqt | cut -d \| -f 1 | grep -qw trivia_test; do
+            while ! psql -U postgres -lqt | cut -d \| -f 1 | grep -qw trivia_test; do
                     sleep 0.1
             done
             echo "The test database is ready"
