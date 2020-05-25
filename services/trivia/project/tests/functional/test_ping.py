@@ -6,6 +6,7 @@ import json
 class TestPing(TestCase):
     def setUp(self):
         self.test_app = create_app()
+        self.test_app.config.from_object("project.config.TestingConfig")
 
     def test_ping(self):
         client = self.test_app.test_client()

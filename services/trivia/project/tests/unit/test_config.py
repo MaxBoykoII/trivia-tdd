@@ -7,6 +7,7 @@ class TestConfig(TestCase):
     def setUp(self):
         """Define test variables and initialize app"""
         self.test_app = create_app()
+        self.test_app.config.from_object("project.config.TestingConfig")
 
     def test_development_config(self):
         test_app = self.test_app

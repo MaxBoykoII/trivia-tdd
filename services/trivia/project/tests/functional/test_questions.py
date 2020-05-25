@@ -8,6 +8,7 @@ import json
 class TestQuestions(TestCase):
     def setUp(self):
         self.test_app = create_app()
+        self.test_app.config.from_object("project.config.TestingConfig")
 
     @parameterized.expand([[1], [2], [3], [4]])
     def test_get_questions(self, page):
