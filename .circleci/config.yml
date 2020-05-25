@@ -58,6 +58,7 @@ jobs:
       - run:
           name: Test api
           command: |
+            pwd
             ls
             python -m unittest discover -s project/tests
 
