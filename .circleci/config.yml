@@ -52,7 +52,7 @@ jobs:
             echo "Listed postgres databases"
             pwd
             ls
-            psql -d $DATABASE_TEST_URL -U postgres -a -f ./services/trivia/project/db/trivia.psql
+            psql -d $DATABASE_TEST_URL -U postgres -a -f ./project/db/trivia.psql
       - run:
           name: Test api
           command: |
