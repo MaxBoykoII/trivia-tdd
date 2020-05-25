@@ -33,7 +33,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: trivia_test
     steps:
-      - checkout
+      # - checkout
       - run:
           name: Install postgresql-client
           command: |
