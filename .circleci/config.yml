@@ -41,17 +41,23 @@ jobs:
           command: |
             apk update
             apk add postgresql-client
+      
+      - run:
+          name: Wait for postgres
+          command: |
+            echo "Waiting for postgres..."
+            while ! nc -z localhost 5432; do
+                sleep 0.1
+            done
+            echo "PostgresSQL started"
 
       - run:
           name: Seed test db
           command: |
             echo "Going to attempt to seed the database..."
-            sleep 10.0
             echo "First attempting to list databases..."
             psql -U postgres -l
             echo "Listed postgres databases"
-            pwd
-            ls
             psql -d $DATABASE_TEST_URL -U postgres -a -f ./project/db/trivia.psql
       - run:
           name: Test api
