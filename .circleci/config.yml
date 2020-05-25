@@ -46,7 +46,7 @@ jobs:
           name: Seed test db
           command: |
             echo "Going to attempt to seed the database..."
-            sleep 2.0
+            sleep 25.0
             echo "First attempting to list databases..."
             psql -U postgres -l
             echo "Listed postgres databases"
