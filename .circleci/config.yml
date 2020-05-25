@@ -58,7 +58,8 @@ jobs:
       - run:
           name: Test api
           command: |
-            python -m unittest discover project/tests
+            ls
+            python -m unittest discover -s project/tests
 
   build:client:
     docker:
