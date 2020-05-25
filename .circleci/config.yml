@@ -27,7 +27,7 @@ jobs:
       - image: $IMAGE:api
         environment:
           PGHOST: 127.0.0.1
-          DATABASE_TEST_URL: postgresql://postgres@localhost:5432/trivia_test
+          DATABASE_TEST_URL: postgresql://postgres:postgres@localhost:5432/trivia_test
       - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_USER: postgres
