@@ -63,6 +63,8 @@ jobs:
             cd /usr/src/app
             pwd
             ls
+            psql -U postgres -l
+            echo "Listed postgres databases"
             python -m unittest discover project/tests
 
   build:client:
