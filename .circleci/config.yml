@@ -26,6 +26,7 @@ jobs:
     docker:
       - image: $IMAGE:api
         environment:
+          PGHOST: 127.0.0.1
           DATABASE_TEST_URL: postgresql://postgres@localhost:5432/trivia_test
       - image: circleci/postgres:9.6.5-alpine
 
