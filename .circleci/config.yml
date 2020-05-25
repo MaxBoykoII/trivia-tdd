@@ -46,10 +46,12 @@ jobs:
           name: Seed test db
           command: |
             echo "Going to attempt to seed the database..."
-            sleep 25.0
+            sleep 10.0
             echo "First attempting to list databases..."
             psql -U postgres -l
             echo "Listed postgres databases"
+            pwd
+            ls
             psql -d $DATABASE_TEST_URL -U postgres -a -f ./services/trivia/project/db/trivia.psql
       - run:
           name: Test api
