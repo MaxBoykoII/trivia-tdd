@@ -63,11 +63,11 @@ jobs:
       - run:
           name: Seed test db
           command: |
-            echo "Going to attempt to seed the database..."
-            echo "First attempting to list databases..."
+            echo "Listing available databases..."
             psql -U postgres -l
-            echo "Listed postgres databases"
+            echo "Listed available databases"
             psql -d $DATABASE_TEST_URL -U postgres -a -f ./project/db/trivia.psql
+            echo "test db has been seeded"
       - run:
           name: Test api
           command: |
