@@ -60,7 +60,10 @@ jobs:
           command: |
             pwd
             ls
-            python -m unittest discover -s project/tests
+            cd /usr/src/app
+            pwd
+            ls
+            python -m unittest discover project/tests
 
   build:client:
     docker:
