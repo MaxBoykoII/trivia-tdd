@@ -50,16 +50,11 @@ jobs:
       - run:
           name: Wait for postgres
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
-          name: List databases
-          command: |
-            psql -U postgres
-            \l
-            exit
-      - run:
-          name: Seed test db
-          command: |
-            psql -d $DATABASE_TEST_URL -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
+     
+     # - run:
+         # name: Seed test db
+          #command: |
+           # psql -d $DATABASE_TEST_URL -U postgres -a -f ~/repo/services/trivia/project/db/trivia.psql
       - run:
           name: Test api
           command: |
