@@ -28,7 +28,7 @@ jobs:
         environment:
           PGHOST: 127.0.0.1
           DATABASE_TEST_URL: postgresql://postgres@localhost:5432/trivia_test
-      - image: circleci/postgres:9.6.5-alpine
+      - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: trivia_test
@@ -50,6 +50,12 @@ jobs:
       - run:
           name: Wait for postgres
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: List databases
+          command: |
+            psql -U postgres
+            \l
+            exit
       - run:
           name: Seed test db
           command: |
