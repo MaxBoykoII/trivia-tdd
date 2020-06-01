@@ -130,7 +130,7 @@ jobs:
           command: |
             docker build \
             --tag $HEROKU_REGISTRY_IMAGE \
-            --file ./Dockerfile
+            --file ./Dockerfile \
             "."
       - run: 
           name: Push image to heroku registry
