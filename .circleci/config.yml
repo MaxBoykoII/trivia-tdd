@@ -112,7 +112,7 @@ jobs:
       - image: cimg/base:2020.01
         environment:
           HEROKU_APP_NAME: mighty-headland-23868
-          HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
+          HEROKU_REGISTRY_IMAGE: registry.heroku.com/mighty-headland-23868/web
 
     working_directory: ~/repo
 
