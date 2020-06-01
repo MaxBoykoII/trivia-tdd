@@ -116,7 +116,11 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: apk add --no-cache curl
+      - run: 
+          name: Install curl
+          command: |
+            apt-get update
+            apt-get install curl
       - run: chmod +x ./release.sh
       - run:
           name: Build image for heroku
