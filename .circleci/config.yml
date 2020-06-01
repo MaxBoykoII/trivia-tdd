@@ -128,10 +128,23 @@ jobs:
       - run:
           name: Build image for heroku
           command: |
+            docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+            docker pull $IMAGE:build-react || true
+            docker pull $IMAGE:production || true
             docker build \
+            --target build-react \
+            --cache-from $IMAGE:build-react \
+            --tag $IMAGE:build-react \
+            --file ./Dockerfile \
+            "."
+            docker build \
+            --cache-from $IMAGE:production \
+            --tag $IMAGE:production \
             --tag $HEROKU_REGISTRY_IMAGE \
             --file ./Dockerfile \
             "."
+            docker push $IMAGE:build-react
+            docker push $IMAGE:production
       - run: 
           name: Push image to heroku registry
           command: |
