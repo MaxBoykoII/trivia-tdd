@@ -119,8 +119,8 @@ jobs:
       - run: 
           name: Install curl
           command: |
-            apt-get update
-            apt-get install curl
+            sudo apt-get update
+            sudo apt-get install curl
       - run: chmod +x ./release.sh
       - run:
           name: Build image for heroku
