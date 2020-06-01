@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
 from project import db
+
 
 """
 Question

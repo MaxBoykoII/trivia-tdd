@@ -1,8 +1,9 @@
-from project import create_app
-from project.api.models import Question, Category
-from unittest import TestCase
-from parameterized import parameterized
 import json
+from unittest import TestCase
+
+from parameterized import parameterized
+from project import create_app
+from project.api.models import Category, Question
 
 
 class TestQuestions(TestCase):

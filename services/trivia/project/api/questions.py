@@ -1,6 +1,6 @@
 from flask import Blueprint, request
-from flask_restx import Resource, Api
-from project.api.models import Question, Category
+from flask_restx import Api, Resource
+from project.api.models import Category, Question
 
 questions_blueprint = Blueprint("questions", __name__)
 api = Api(questions_blueprint)

@@ -1,6 +1,7 @@
-from project import create_app
-from unittest import TestCase
 import json
+from unittest import TestCase
+
+from project import create_app
 
 
 class TestPing(TestCase):

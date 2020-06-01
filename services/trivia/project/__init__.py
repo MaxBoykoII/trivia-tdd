@@ -1,12 +1,14 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 import os
+
+from flask import Flask
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 
 # instantiate the db
 db = SQLAlchemy()
 
 cors = CORS()
+
 
 # application factory pattern
 def create_app(script_info=None):

@@ -37,6 +37,12 @@ jobs:
 
     steps:
       - run:
+          name: Check code quality
+          command: |
+            flake8 project
+            black project --check
+            isort -rc project --check-only
+      - run:
           name: Install postgresql-client
           command: |
             apk update
