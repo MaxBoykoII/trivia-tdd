@@ -17,7 +17,7 @@ class FormView extends Component {
 
   componentDidMount() {
     $.ajax({
-      url: `/categories`, //TODO: update request URL
+      url: `${process.env.REACT_APP_TRIVIA_SERVICE_URL}/categories`, //TODO: update request URL
       type: "GET",
       success: result => {
         this.setState({ categories: result.categories });
