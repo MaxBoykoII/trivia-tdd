@@ -33,7 +33,7 @@ class FormView extends Component {
   handleSubmitQuestion = event => {
     event.preventDefault();
     $.ajax({
-      url: "/questions", //TODO: update request URL
+      url: `${process.env.REACT_APP_TRIVIA_SERVICE_URL}/questions`,
       type: "POST",
       dataType: "json",
       contentType: "application/json",

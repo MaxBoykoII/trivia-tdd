@@ -32,6 +32,18 @@ def create_app(script_info=None):
     app.register_blueprint(questions_blueprint)
     app.register_blueprint(categories_blueprint)
 
+    # add CORS headers
+    @app.after_request
+    def after_request(response):
+        response.headers.add(
+            "Access-Control-Allow-Headers", "Content-Type,Authorization,true"
+        )
+        response.headers.add("Access-Control-Allow-Credentials", "true")
+        response.headers.add(
+            "Access-Control-Allow-Methods", "GET,PATCH,POST,DELETE,OPTIONS"
+        )
+        return response
+
     # shell context for flask cli
     @app.shell_context_processor
     def ctx():

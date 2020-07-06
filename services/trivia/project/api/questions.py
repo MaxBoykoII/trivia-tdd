@@ -14,7 +14,7 @@ class Questions(Resource):
 
         query = Question.query.paginate(page, per_page, False)
         questions = [item.format() for item in query.items]
-        total_questions = len(questions)
+        total_questions = Question.query.count()
 
         current_category = None
 
@@ -30,6 +30,19 @@ class Questions(Resource):
         }
 
         return payload, 200
+
+    def post(self):
+        post_data = request.get_json()
+
+        question = Question(
+            post_data.get("question"),
+            post_data.get("answer"),
+            post_data.get("category"),
+            post_data.get("difficulty"),
+        )
+        question.insert()
+
+        return question.id, 201
 
 
 api.add_resource(Questions, "/questions")
